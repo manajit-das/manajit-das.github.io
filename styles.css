@@ -66,3 +66,24 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
+/* Additional CSS for better styling */
+img {
+    display: block;
+    margin: 0 auto 20px;
+}
+
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
