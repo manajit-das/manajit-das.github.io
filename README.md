@@ -1,2 +1,3 @@
 # manajit-das.github.io
-personal website
+personal website.
+acknowledgement: chatgpt
