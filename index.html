@@ -3,69 +3,1384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Profile</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Manajit Das | Computational Chemist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0f14;
+            --bg2: #13161d;
+            --bg3: #1a1e28;
+            --surface: #1e2230;
+            --surface2: #252a3a;
+            --border: #2e3448;
+            --accent: #6ee7c7;
+            --accent2: #4fc3a1;
+            --accent3: #a78bfa;
+            --text: #e8ecf4;
+            --text2: #9ba3be;
+            --text3: #6b7494;
+            --gold: #d4a847;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'DM Sans', sans-serif;
+            --mono: 'DM Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 15px;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* ── BACKGROUND TEXTURE ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 10% 20%, rgba(110,231,199,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 90% 80%, rgba(167,139,250,0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(13,15,20,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 48px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--text);
+            text-decoration: none;
+        }
+        .logo span { color: var(--accent); }
+
+        /* ── NAV ── */
+        nav {
+            display: flex;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text3);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: color 0.2s, background 0.2s;
+            position: relative;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 2px; left: 50%; right: 50%;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: left 0.25s, right 0.25s;
+        }
+
+        .tab-btn:hover { color: var(--text2); background: rgba(255,255,255,0.04); }
+        .tab-btn.active { color: var(--accent); }
+        .tab-btn.active::after { left: 16px; right: 16px; }
+
+        /* ── MOBILE MENU ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 22px; height: 2px;
+            background: var(--text2);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* ── MAIN LAYOUT ── */
+        main {
+            padding-top: 64px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeUp 0.4s ease;
+        }
+        .tab-pane.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── HERO (HOME) ── */
+        .hero {
+            min-height: calc(100vh - 64px);
+            display: flex;
+            align-items: center;
+            padding: 80px 48px;
+            max-width: 1100px;
+            margin: 0 auto;
+            gap: 80px;
+        }
+
+        .hero-text { flex: 1; }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .hero-name {
+            font-family: var(--serif);
+            font-size: clamp(52px, 6vw, 80px);
+            font-weight: 300;
+            line-height: 1.05;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .hero-name em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-title {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 300;
+            color: var(--text2);
+            margin-bottom: 32px;
+        }
+
+        .hero-desc {
+            font-size: 15px;
+            color: var(--text2);
+            max-width: 520px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: var(--accent);
+            color: #0d0f14;
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: transparent;
+            color: var(--text2);
+            font-family: var(--sans);
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: border-color 0.2s, color 0.2s, transform 0.15s;
+        }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+        .hero-visual {
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .profile-frame {
+            width: 280px; height: 280px;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid var(--border);
+            background: var(--surface);
+        }
+
+        .profile-frame img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-placeholder {
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+        }
+
+        .profile-placeholder svg { opacity: 0.3; }
+
+        .profile-placeholder p {
+            font-size: 12px;
+            color: var(--text3);
+            font-family: var(--mono);
+        }
+
+        .hero-badge {
+            position: absolute;
+            bottom: -16px; right: -16px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+
+        .hero-badge .badge-num {
+            font-family: var(--serif);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .hero-badge .badge-label {
+            font-size: 11px;
+            color: var(--text3);
+            letter-spacing: 0.05em;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item .stat-num {
+            font-family: var(--serif);
+            font-size: 32px;
+            font-weight: 300;
+            color: var(--text);
+            line-height: 1;
+        }
+        .stat-item .stat-label {
+            font-size: 12px;
+            color: var(--text3);
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+
+        /* ── PAGE SECTIONS ── */
+        .page-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 48px;
+        }
+
+        .section-header {
+            margin-bottom: 56px;
+        }
+
+        .section-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: var(--serif);
+            font-size: 44px;
+            font-weight: 300;
+            color: var(--text);
+            line-height: 1.1;
+        }
+
+        /* ── ABOUT ── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: var(--text2);
+            line-height: 1.85;
+            margin-bottom: 20px;
+        }
+
+        .about-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .info-card:hover { border-color: var(--accent); transform: translateX(4px); }
+
+        .info-card .card-icon {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .info-card .card-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .info-card .card-detail {
+            font-size: 13px;
+            color: var(--text3);
+        }
+
+        /* ── RESEARCH ── */
+        .research-areas {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .research-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s;
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .research-card:hover { border-color: rgba(110,231,199,0.3); transform: translateY(-2px); }
+        .research-card:hover::before { opacity: 1; }
+
+        .rc-number {
+            font-family: var(--serif);
+            font-size: 48px;
+            font-weight: 300;
+            color: var(--border);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .rc-title {
+            font-family: var(--serif);
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .rc-desc {
+            font-size: 13px;
+            color: var(--text3);
+            line-height: 1.7;
+        }
+
+        .rc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 20px;
+        }
+
+        .tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent);
+            background: rgba(110,231,199,0.08);
+            border: 1px solid rgba(110,231,199,0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        /* ── PUBLICATIONS ── */
+        .pub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .pub-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .pub-card:hover {
+            border-color: rgba(110,231,199,0.25);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+        }
+
+        .pub-inner {
+            display: flex;
+            gap: 0;
+        }
+
+        .pub-toc {
+            flex-shrink: 0;
+            width: 200px;
+            background: var(--surface2);
+            border-right: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            min-height: 180px;
+        }
+
+        .toc-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--bg3) 0%, var(--surface2) 100%);
+            border-radius: 8px;
+            border: 1px dashed var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text3);
+            font-family: var(--mono);
+            text-align: center;
+            padding: 12px;
+        }
+
+        .toc-placeholder svg { opacity: 0.3; }
+
+        .pub-content {
+            flex: 1;
+            padding: 28px 32px;
+        }
+
+        .pub-year {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .pub-title {
+            font-family: var(--serif);
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .pub-authors {
+            font-size: 13px;
+            color: var(--text3);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .pub-journal {
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 16px;
+        }
+
+        .pub-abstract {
+            font-size: 13px;
+            color: var(--text3);
+            line-height: 1.75;
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+            margin-top: 4px;
+        }
+
+        .pub-abstract strong {
+            color: var(--text2);
+            font-weight: 500;
+        }
+
+        .pub-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 32px;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid var(--border);
+        }
+
+        .pub-tags { display: flex; gap: 6px; }
+
+        .pub-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-family: var(--mono);
+            color: var(--accent);
+            text-decoration: none;
+            padding: 6px 14px;
+            border: 1px solid rgba(110,231,199,0.3);
+            border-radius: 6px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .pub-link:hover { background: rgba(110,231,199,0.08); border-color: var(--accent); }
+
+        /* ── CONTACT ── */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        .contact-intro {
+            font-family: var(--serif);
+            font-size: 28px;
+            font-weight: 300;
+            color: var(--text2);
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            transition: border-color 0.2s, transform 0.2s;
+            color: var(--text);
+        }
+
+        .contact-item:hover { border-color: var(--accent); transform: translateX(4px); }
+
+        .contact-icon {
+            width: 40px; height: 40px;
+            background: var(--surface2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-detail .contact-type {
+            font-size: 11px;
+            color: var(--text3);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-family: var(--mono);
+        }
+
+        .contact-detail .contact-value {
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            font-family: var(--mono);
+            color: var(--text3);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-family: var(--sans);
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea { min-height: 120px; }
+
+        /* ── GALLERY ── */
+        .gallery-grid {
+            columns: 3;
+            gap: 16px;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .gallery-item:hover { transform: scale(1.01); border-color: var(--accent); }
+
+        .gallery-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--text3);
+            font-size: 12px;
+            font-family: var(--mono);
+        }
+
+        .gallery-placeholder:nth-child(odd) { aspect-ratio: 3/4; }
+
+        .gallery-caption {
+            padding: 12px 16px;
+            font-size: 12px;
+            color: var(--text3);
+        }
+
+        .gallery-upload-hint {
+            background: var(--surface);
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .gallery-upload-hint p {
+            color: var(--text3);
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .gallery-upload-hint .hint-title {
+            font-family: var(--serif);
+            font-size: 22px;
+            color: var(--text2);
+            margin-bottom: 8px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text3);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text3);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        /* ── DIVIDER ── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 40px 0;
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 768px) {
+            header { padding: 0 20px; }
+            nav { display: none; }
+            nav.open { display: flex; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px; z-index: 99; }
+            .hamburger { display: flex; }
+
+            .hero { flex-direction: column-reverse; padding: 40px 20px; gap: 40px; min-height: auto; padding-top: 48px; }
+            .hero-visual { margin: 0 auto; }
+            .profile-frame { width: 200px; height: 200px; }
+
+            .page-section { padding: 48px 20px; }
+            .about-grid, .research-areas, .contact-layout { grid-template-columns: 1fr; }
+            .gallery-grid { columns: 2; }
+            .pub-inner { flex-direction: column; }
+            .pub-toc { width: 100%; min-height: 140px; }
+            .hero-stats { gap: 20px; }
+            footer { flex-direction: column; gap: 16px; padding: 24px 20px; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Manajit Das</h1>
-        <p>Welcome to my personal profile</p>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#research">Research Interest</a></li>
-            <li><a href="#publications">Publications</a></li>
-            <li><a href="#teaching">Teaching</a></li>
-            <li><a href="#others">Others</a></li>
-        </ul>
+
+<header>
+    <a class="logo" href="#" onclick="showTab('home')">Manajit <span>Das</span></a>
+    <nav id="main-nav">
+        <button class="tab-btn active" onclick="showTab('home')">Home</button>
+        <button class="tab-btn" onclick="showTab('about')">About Me</button>
+        <button class="tab-btn" onclick="showTab('research')">Research</button>
+        <button class="tab-btn" onclick="showTab('publications')">Publications</button>
+        <button class="tab-btn" onclick="showTab('contact')">Contact</button>
+        <button class="tab-btn" onclick="showTab('gallery')">Gallery</button>
     </nav>
-    <main>
-        <section id="about">
-            <h2>About</h2>
-            <img src="./your_image.png" alt="Profile Picture" style="width:150px;height:150px;border-radius:50%;">
-            <p>
-                I am currently pursuing my PhD in Computational Chemistry at IIT Bombay, where I have the privilege of working in Prof. R. B. Sunoj's lab. My research focuses on exploring the intricate mechanisms of chemical reactions using advanced computational techniques. Beyond my academic endeavors, I am passionate about data analysis, teaching, and engaging in interdisciplinary research collaborations.
-            </p>
-        </section>
-        <section id="research">
-            <h2>Research Interest</h2>
-            <p>This section contains your research interests.</p>
-        </section>
-        <section id="publications">
-            <h2>Publications</h2>
-            <ul>
-                <li>
-                    Jana, S.; Panigrahi, G.; Narayanswamy, S.; Ishtiyak, M.; Das, M.; Bhattacharjee, P. P.; Ranjan, K. M.; Prakash, J. Synthesis, crystal structure, optical absorption study, and electronic structure of Cs3FeCl5. Solid State Sci. 2020, 100, 106064
-                    <a href="https://www.sciencedirect.com/science/article/pii/S1293255819311070" target="_blank">[Link]</a>
-                </li>
-                <li>
-                    Das, M.; Gogoi, A.; Sunoj, R. B. Molecular Insights on Solvent Effects in Organic Reactions as Obtained through Computational Chemistry Tools. J. Org. Chem. 2022, 87, 1630-1640.
-                    <a href="https://pubs.acs.org/doi/10.1021/acs.joc.1c02222" target="_blank">[Link]</a>
-                </li>
-                <li>
-                    Das, M.; Sharma, P.; Sunoj, R. B. Machine Learning Assisted enantioselectivity Prediction of Asymmetric Relay Heck Reaction. J. Chem. Phys. 2022, 156, 114303. 
-                    <a href="https://pubs.aip.org/aip/jcp/article/156/11/114303/2840986/Machine-learning-studies-on-asymmetric-relay-Heck" target="_blank">[Link]</a>
-                </li>
-                <li>
-                    Das, M.; Ghosh, A.; Sunoj, R. B. Advances in machine learning with chemical language models in molecular property and reaction outcome predictions. J. Comput. Chem. 2024, 45, 1160-1176.
-                    <a href="https://onlinelibrary.wiley.com/doi/10.1002/jcc.27315" target="_blank">[Link]</a>
-                </li>
-            </ul>
-                    
-            <p>This section contains a list of your publications.</p>
-        </section>
-        <section id="teaching">
-            <h2>Teaching</h2>
-            <p>This section contains information about your teaching experience.</p>
-        </section>
-        <section id="others">
-            <h2>Others</h2>
-            <p>This section contains other relevant information.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Manajit Das. All rights reserved.</p>
-    </footer>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</header>
+
+<main>
+
+    <!-- ── HOME ── -->
+    <div id="tab-home" class="tab-pane active">
+        <div class="hero">
+            <div class="hero-text">
+                <p class="hero-eyebrow">// PhD Researcher · IIT Bombay</p>
+                <h1 class="hero-name">Manajit<br><em>Das</em></h1>
+                <p class="hero-title">Computational Chemist & Data Scientist</p>
+                <p class="hero-desc">
+                    Exploring the intricate mechanisms of chemical reactions through advanced
+                    computational techniques. Working at the intersection of chemistry,
+                    machine learning, and molecular modeling in Prof. R. B. Sunoj's lab.
+                </p>
+                <div class="hero-links">
+                    <a href="#" class="btn-primary" onclick="showTab('publications'); return false;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Publications
+                    </a>
+                    <a href="#" class="btn-ghost" onclick="showTab('research'); return false;">
+                        View Research →
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-num">4</div>
+                        <div class="stat-label">Publications</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">3+</div>
+                        <div class="stat-label">Years at IIT Bombay</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num">2</div>
+                        <div class="stat-label">Research Areas</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="profile-frame">
+                    <!-- Replace src with your image path: <img src="./your_image.png" alt="Manajit Das"> -->
+                    <div class="profile-placeholder">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <p>your_image.png</p>
+                    </div>
+                </div>
+                <div class="hero-badge">
+                    <div class="badge-num">IIT</div>
+                    <div class="badge-label">Bombay · PhD</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── ABOUT ME ── -->
+    <div id="tab-about" class="tab-pane">
+        <div class="page-section">
+            <div class="section-header">
+                <p class="section-label">// 001 · About</p>
+                <h2 class="section-title">About Me</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        I am currently pursuing my PhD in Computational Chemistry at IIT Bombay,
+                        where I have the privilege of working in Prof. R. B. Sunoj's lab. My
+                        research focuses on exploring the intricate mechanisms of chemical
+                        reactions using advanced computational techniques.
+                    </p>
+                    <p>
+                        Beyond my academic endeavors, I am passionate about data analysis,
+                        teaching, and engaging in interdisciplinary research collaborations.
+                        I work at the intersection of quantum chemistry, machine learning, and
+                        reaction mechanism elucidation.
+                    </p>
+                    <p>
+                        My recent work involves applying machine learning and chemical language
+                        models to predict molecular properties and reaction outcomes — bridging
+                        the gap between traditional computational chemistry and modern AI methods.
+                    </p>
+                    <div class="divider"></div>
+                    <p style="color: var(--text3); font-size: 13px; font-family: var(--mono);">
+                        // Add more about your background, interests, hobbies here
+                    </p>
+                </div>
+                <div class="about-cards">
+                    <div class="info-card">
+                        <div class="card-icon">🎓</div>
+                        <div class="card-title">PhD, Computational Chemistry</div>
+                        <div class="card-detail">IIT Bombay · Prof. R. B. Sunoj's Lab</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-icon">🔬</div>
+                        <div class="card-title">Research Focus</div>
+                        <div class="card-detail">Reaction Mechanisms · ML in Chemistry</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-icon">📍</div>
+                        <div class="card-title">Location</div>
+                        <div class="card-detail">Mumbai, Maharashtra, India</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-icon">✍️</div>
+                        <div class="card-title">Teaching & Outreach</div>
+                        <div class="card-detail">Undergraduate Chemistry · Workshops</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="card-icon">💻</div>
+                        <div class="card-title">Technical Skills</div>
+                        <div class="card-detail">Python · DFT · ML · Gaussian · ORCA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── RESEARCH ── -->
+    <div id="tab-research" class="tab-pane">
+        <div class="page-section">
+            <div class="section-header">
+                <p class="section-label">// 002 · Research</p>
+                <h2 class="section-title">Research Interests</h2>
+            </div>
+            <div class="research-areas">
+                <div class="research-card">
+                    <div class="rc-number">01</div>
+                    <h3 class="rc-title">Computational Reaction Mechanisms</h3>
+                    <p class="rc-desc">
+                        Elucidating the mechanistic pathways of organic and organometallic
+                        reactions using density functional theory (DFT) and ab initio methods.
+                        Particular interest in solvent effects and transition state modeling.
+                    </p>
+                    <div class="rc-tags">
+                        <span class="tag">DFT</span>
+                        <span class="tag">Transition States</span>
+                        <span class="tag">Solvent Effects</span>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <div class="rc-number">02</div>
+                    <h3 class="rc-title">Machine Learning in Chemistry</h3>
+                    <p class="rc-desc">
+                        Developing and applying ML models — including chemical language models
+                        and graph neural networks — for predicting molecular properties, reaction
+                        outcomes, and enantioselectivity in asymmetric catalysis.
+                    </p>
+                    <div class="rc-tags">
+                        <span class="tag">ML</span>
+                        <span class="tag">Language Models</span>
+                        <span class="tag">Selectivity Prediction</span>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <div class="rc-number">03</div>
+                    <h3 class="rc-title">Asymmetric Catalysis</h3>
+                    <p class="rc-desc">
+                        Understanding the origin of stereoselectivity in transition-metal and
+                        organocatalytic reactions through combined computational and data-driven
+                        approaches, including Heck and relay catalytic cycles.
+                    </p>
+                    <div class="rc-tags">
+                        <span class="tag">Enantioselectivity</span>
+                        <span class="tag">Organocatalysis</span>
+                        <span class="tag">Heck Reaction</span>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <div class="rc-number">04</div>
+                    <h3 class="rc-title">Data-Driven Molecular Science</h3>
+                    <p class="rc-desc">
+                        Integrating high-throughput computational screening with statistical
+                        analysis and visualization tools to extract chemical insights from
+                        large molecular datasets and reaction databases.
+                    </p>
+                    <div class="rc-tags">
+                        <span class="tag">Data Analysis</span>
+                        <span class="tag">Cheminformatics</span>
+                        <span class="tag">High-Throughput</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── PUBLICATIONS ── -->
+    <div id="tab-publications" class="tab-pane">
+        <div class="page-section" style="max-width: 1000px;">
+            <div class="section-header">
+                <p class="section-label">// 003 · Publications</p>
+                <h2 class="section-title">Publications</h2>
+            </div>
+            <div class="pub-list">
+
+                <!-- Pub 1 -->
+                <div class="pub-card">
+                    <div class="pub-inner">
+                        <div class="pub-toc">
+                            <!-- Replace with: <img src="./toc_1.png" alt="TOC" style="width:100%;border-radius:6px;"> -->
+                            <div class="toc-placeholder">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                <span>TOC Image</span>
+                                <span style="font-size:9px; opacity:0.5">Replace with toc_1.png</span>
+                            </div>
+                        </div>
+                        <div class="pub-content">
+                            <p class="pub-year">2020</p>
+                            <h3 class="pub-title">Synthesis, Crystal Structure, Optical Absorption Study, and Electronic Structure of Cs₃FeCl₅</h3>
+                            <p class="pub-authors">Jana, S.; Panigrahi, G.; Narayanswamy, S.; Ishtiyak, M.; Das, M.; et al.</p>
+                            <p class="pub-journal"><em>Solid State Sciences</em> · 2020, 100, 106064</p>
+                            <p class="pub-abstract">
+                                <strong>Abstract: </strong>
+                                This work reports the synthesis and comprehensive characterization of the perovskite-related
+                                compound Cs₃FeCl₅, including its crystal structure determination, optical absorption properties,
+                                and electronic structure analysis. The study provides insights into the structural and optoelectronic
+                                properties of this halide material, contributing to the growing understanding of iron-based halide
+                                compounds for potential functional material applications.
+                                <!-- Replace with the actual abstract for this paper -->
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pub-footer">
+                        <div class="pub-tags">
+                            <span class="tag">Crystal Structure</span>
+                            <span class="tag">Solid State</span>
+                        </div>
+                        <a href="https://www.sciencedirect.com/science/article/pii/S1293255819311070" target="_blank" class="pub-link">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            Full Article
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pub 2 -->
+                <div class="pub-card">
+                    <div class="pub-inner">
+                        <div class="pub-toc">
+                            <!-- Replace with: <img src="./toc_2.png" alt="TOC" style="width:100%;border-radius:6px;"> -->
+                            <div class="toc-placeholder">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                <span>TOC Image</span>
+                                <span style="font-size:9px; opacity:0.5">Replace with toc_2.png</span>
+                            </div>
+                        </div>
+                        <div class="pub-content">
+                            <p class="pub-year">2022</p>
+                            <h3 class="pub-title">Molecular Insights on Solvent Effects in Organic Reactions as Obtained through Computational Chemistry Tools</h3>
+                            <p class="pub-authors">Das, M.; Gogoi, A.; Sunoj, R. B.</p>
+                            <p class="pub-journal"><em>Journal of Organic Chemistry</em> · 2022, 87, 1630–1640</p>
+                            <p class="pub-abstract">
+                                <strong>Abstract: </strong>
+                                Solvents play a crucial yet often underappreciated role in determining the outcome of organic reactions.
+                                This perspective examines how modern computational chemistry tools — including implicit and explicit
+                                solvation models, microsolvation approaches, and molecular dynamics — can reveal the molecular-level
+                                origins of solvent effects on reaction rates, selectivities, and mechanisms. Selected case studies
+                                illustrate how these computational insights complement experimental observations and guide synthetic design.
+                                <!-- Replace with the actual abstract -->
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pub-footer">
+                        <div class="pub-tags">
+                            <span class="tag">Solvent Effects</span>
+                            <span class="tag">DFT</span>
+                            <span class="tag">Organic Reactions</span>
+                        </div>
+                        <a href="https://pubs.acs.org/doi/10.1021/acs.joc.1c02222" target="_blank" class="pub-link">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            Full Article
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pub 3 -->
+                <div class="pub-card">
+                    <div class="pub-inner">
+                        <div class="pub-toc">
+                            <div class="toc-placeholder">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                <span>TOC Image</span>
+                                <span style="font-size:9px; opacity:0.5">Replace with toc_3.png</span>
+                            </div>
+                        </div>
+                        <div class="pub-content">
+                            <p class="pub-year">2022</p>
+                            <h3 class="pub-title">Machine Learning Assisted Enantioselectivity Prediction of Asymmetric Relay Heck Reaction</h3>
+                            <p class="pub-authors">Das, M.; Sharma, P.; Sunoj, R. B.</p>
+                            <p class="pub-journal"><em>Journal of Chemical Physics</em> · 2022, 156, 114303</p>
+                            <p class="pub-abstract">
+                                <strong>Abstract: </strong>
+                                Predicting enantioselectivity remains a central challenge in asymmetric catalysis. This work develops
+                                machine learning models trained on DFT-computed features to predict the enantiomeric excess of an
+                                asymmetric relay Heck reaction. The study demonstrates that descriptor-based ML models can accurately
+                                capture the subtle steric and electronic factors governing facial selectivity, offering a
+                                computationally efficient alternative to exhaustive transition-state searches for catalyst screening.
+                                <!-- Replace with the actual abstract -->
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pub-footer">
+                        <div class="pub-tags">
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Enantioselectivity</span>
+                            <span class="tag">Heck Reaction</span>
+                        </div>
+                        <a href="https://pubs.aip.org/aip/jcp/article/156/11/114303/2840986/Machine-learning-studies-on-asymmetric-relay-Heck" target="_blank" class="pub-link">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            Full Article
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pub 4 -->
+                <div class="pub-card">
+                    <div class="pub-inner">
+                        <div class="pub-toc">
+                            <div class="toc-placeholder">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                                <span>TOC Image</span>
+                                <span style="font-size:9px; opacity:0.5">Replace with toc_4.png</span>
+                            </div>
+                        </div>
+                        <div class="pub-content">
+                            <p class="pub-year">2024</p>
+                            <h3 class="pub-title">Advances in Machine Learning with Chemical Language Models in Molecular Property and Reaction Outcome Predictions</h3>
+                            <p class="pub-authors">Das, M.; Ghosh, A.; Sunoj, R. B.</p>
+                            <p class="pub-journal"><em>Journal of Computational Chemistry</em> · 2024, 45, 1160–1176</p>
+                            <p class="pub-abstract">
+                                <strong>Abstract: </strong>
+                                Chemical language models (CLMs) — large pre-trained models operating on SMILES, SELFIES, and
+                                related molecular string representations — have emerged as powerful tools for molecular property
+                                prediction and reaction outcome forecasting. This review surveys recent advances in CLMs, examines
+                                their architectures, training strategies, and benchmark performance, and discusses applications
+                                ranging from physicochemical property prediction to retrosynthesis and reaction yield forecasting.
+                                Perspectives on current limitations and future directions in the field are also provided.
+                                <!-- Replace with the actual abstract -->
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pub-footer">
+                        <div class="pub-tags">
+                            <span class="tag">Language Models</span>
+                            <span class="tag">Molecular Properties</span>
+                            <span class="tag">Review</span>
+                        </div>
+                        <a href="https://onlinelibrary.wiley.com/doi/10.1002/jcc.27315" target="_blank" class="pub-link">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            Full Article
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── CONTACT ── -->
+    <div id="tab-contact" class="tab-pane">
+        <div class="page-section">
+            <div class="section-header">
+                <p class="section-label">// 005 · Contact</p>
+                <h2 class="section-title">Get in Touch</h2>
+            </div>
+            <div class="contact-layout">
+                <div>
+                    <p class="contact-intro">
+                        Open to research collaborations, discussions, and new opportunities.
+                    </p>
+                    <div class="contact-links">
+                        <a class="contact-item" href="mailto:manajit@chem.iitb.ac.in">
+                            <div class="contact-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </div>
+                            <div class="contact-detail">
+                                <div class="contact-type">Email</div>
+                                <div class="contact-value">manajit@chem.iitb.ac.in</div>
+                            </div>
+                        </a>
+                        <a class="contact-item" href="https://scholar.google.com" target="_blank">
+                            <div class="contact-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </div>
+                            <div class="contact-detail">
+                                <div class="contact-type">Google Scholar</div>
+                                <div class="contact-value">View Profile →</div>
+                            </div>
+                        </a>
+                        <a class="contact-item" href="https://github.com" target="_blank">
+                            <div class="contact-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                            </div>
+                            <div class="contact-detail">
+                                <div class="contact-type">GitHub</div>
+                                <div class="contact-value">@manajitdas <!-- update handle --></div>
+                            </div>
+                        </a>
+                        <a class="contact-item" href="https://linkedin.com" target="_blank">
+                            <div class="contact-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                            </div>
+                            <div class="contact-detail">
+                                <div class="contact-type">LinkedIn</div>
+                                <div class="contact-value">Connect on LinkedIn →</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <p style="font-size: 13px; color: var(--text3); font-family: var(--mono); margin-bottom: 8px;">// Send a message</p>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" placeholder="Research collaboration, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea placeholder="Your message..."></textarea>
+                    </div>
+                    <button class="btn-primary" style="align-self: flex-start;">
+                        Send Message
+                    </button>
+                    <p style="font-size: 11px; color: var(--text3); font-family: var(--mono);">
+                        // Note: wire this form to a backend or Formspree for it to function
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── GALLERY ── -->
+    <div id="tab-gallery" class="tab-pane">
+        <div class="page-section" style="max-width: 1100px;">
+            <div class="section-header">
+                <p class="section-label">// 006 · Gallery</p>
+                <h2 class="section-title">Gallery</h2>
+            </div>
+
+            <div class="gallery-upload-hint">
+                <div class="hint-title">Your Photos Go Here</div>
+                <p>
+                    Replace the placeholder cards below by adding your images to the project folder
+                    and updating the <code style="color: var(--accent); font-family: var(--mono);">src</code> attributes.
+                    You can organize them into categories like Conference Photos, Lab Life, Travel, etc.
+                </p>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Gallery items — replace toc-placeholder divs with <img src="./gallery/img1.jpg" alt="..."> -->
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Conference / Talk</span>
+                    </div>
+                    <div class="gallery-caption">ACS Meeting 2023 · San Francisco</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder" style="aspect-ratio: 3/4;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Lab Photo</span>
+                    </div>
+                    <div class="gallery-caption">Sunoj Lab · IIT Bombay</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Workshop</span>
+                    </div>
+                    <div class="gallery-caption">Computational Chemistry Workshop · 2022</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder" style="aspect-ratio: 3/4;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Travel</span>
+                    </div>
+                    <div class="gallery-caption">Mumbai · Gateway of India</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Poster Presentation</span>
+                    </div>
+                    <div class="gallery-caption">IIT Bombay Research Symposium</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Molecular Visualization</span>
+                    </div>
+                    <div class="gallery-caption">Transition State Structure · 2022</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer>
+    <p class="footer-text">© 2024 Manajit Das · IIT Bombay</p>
+    <div class="footer-links">
+        <a href="#" onclick="showTab('home')">Home</a>
+        <a href="#" onclick="showTab('publications')">Publications</a>
+        <a href="#" onclick="showTab('contact')">Contact</a>
+    </div>
+</footer>
+
+<script>
+    function showTab(name) {
+        // hide all panes
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+        // show selected
+        const pane = document.getElementById('tab-' + name);
+        if (pane) pane.classList.add('active');
+
+        // activate matching button
+        document.querySelectorAll('.tab-btn').forEach(b => {
+            if (b.getAttribute('onclick').includes("'" + name + "'")) b.classList.add('active');
+        });
+
+        // close mobile menu & scroll top
+        document.getElementById('main-nav').classList.remove('open');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMenu() {
+        document.getElementById('main-nav').classList.toggle('open');
+    }
+</script>
+
 </body>
 </html>
